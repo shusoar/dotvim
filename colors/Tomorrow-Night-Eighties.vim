@@ -1,6 +1,7 @@
 " Tomorrow Night Eighties - Full Colour and 256 Colour
 " http://chriskempson.com
 " Hex colour conversion functions borrowed from the theme "Desert256""
+" Modified by shusoar@gmail.com 2015/05/01/ V1.0
 
 " Default GUI Colours
 let s:background = "16191C" "for gvim
@@ -272,7 +273,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     " call <SID>X("Normal", s:foreground, s:background, "") 
     " 注意normal的第二部分代表着整体环境的真-背景色
     " normal的第一部分代表着普通字符的颜色
+    " 正常经典背景色
     call <SID>X("Normal", s:white, s:background, "") 
+    "透明背景设定 --加上此句终端vim背景就透明了--且不影响之前设定
+    " hi Normal ctermbg=none 
     call <SID>X("Error", s:error, s:background, "") 
     call <SID>X("Search", s:black, s:light_green, "")
     "假如底色变成了base02
@@ -285,7 +289,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     "vimError用一般的hi写法会有奇怪的错误-配色效果
     call <SID>X("vimError", s:error, s:background, "") 
     call <SID>X("vimCommand", s:light_green, "", "none")
-    "括号匹配
+    "括号匹配色
     hi MatchParen ctermfg=0 ctermbg=12 guifg=Black guibg=#9999FF
     "ctrl+v alt+?
     hi SpecialKey term=reverse cterm=reverse ctermfg=240 ctermbg=116  
@@ -322,15 +326,16 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     " call <SID>X("Keyword", s:blue3, "", "")
     " 这时行数条的颜色设置
     call <SID>X("LineNr", s:selection, "", "")
-    "书签条  就是这个了 完美的解决了一致性显示问题 是marks所在的栏 警告也在此栏 
+    "sign条  就是这个了 完美的解决了一致性显示问题 是marks所在的栏 警告也在此栏 
     call <SID>X("SignColumn", s:background2, s:line, "")
     " 虚拟模式选中 透明色
     call <SID>X("Visual", "", s:selection, "")
     "搜索结果高亮
     call <SID>X("NonText", s:blue3, "", "")
     " 窗口框架间分割区域配色 完善的方法 -本版改进配合Numix主题已经有Sublime风了
-    " call <SID>X("VertSplit", s:foreground, s:window, "none")
-    call <SID>X("VertSplit", s:background2, s:background2, "none")
+    "修复了分栏间分割条不显 难以拖动的问题
+    "可以试试selection background2 line混用的情况
+    call <SID>X("VertSplit", s:line, s:line, "none")
 
     " call <SID>X("SpecialKey", s:selection, "", "")
     call <SID>X("StatusLine", s:window, s:yellow, "reverse")
